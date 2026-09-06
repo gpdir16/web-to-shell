@@ -1,0 +1,13 @@
+{
+  "name": "web-to-shell",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "keygen": "node server.js keygen",
+    "test": "node server.js selftest"
+  },
+  "dependencies": {
+    "openpgp": "^6.3.1"
+  }
+}
