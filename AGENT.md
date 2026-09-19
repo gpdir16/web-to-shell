@@ -1,21 +1,23 @@
-# web-to-shell (원격 에이전트)
+# web-to-shell 도구 사용 방법
 
-이 호스트는 HTTP GET으로만 조작한다. 서명되지 않은 요청은 거부된다.
+이 도구는 HTTP GET으로 동작합니다.
 
-준비물: `BASE_URL`(클플 터널 origin, 끝 슬래시 없음), 호스트 `authorized.asc`에 대응하는 PGP 비밀키. 비밀키를 이 파일·로그·URL에 넣지 말 것.
+사용자는 이 도구를 이용하여 사용자의 컴퓨터(폴더)를 당신이 직접 제어하길 원하기 때문에 이 파일을 전달했을 것입니다.
 
-## 요청
+준비물: (1) `BASE_URL`(공개 URL, 끝 슬래시 없이), (2) 호스트 `authorized.asc`에 대응하는 PGP 비밀키
+
+## 툴 사용 방법
 
 ```
 GET {BASE_URL}/web-to-shell/{action}/{sig}/{payload}
 ```
 
-- method: GET만. POST/PUT 불가.
+- method: GET만 허용
 - `action`: `terminal` | `read-file` | `edit-file`
-- `payload`: JSON UTF-8 바이트의 **표준 base64**. 경로에 넣을 때 `encodeURIComponent`.
-- `sig`: 그 JSON 바이트에 대한 **detached PGP 서명**(armored)의 UTF-8을 **base64url**.
-- 서명 대상은 URL이 아니라 **payload를 base64 decode한 원본 JSON 바이트**. 텍스트 모드 서명 금지(개행 정규화됨).
-- JSON은 객체 하나. `JSON.stringify`를 **한 번만** 해서 그 문자열을 서명·인코딩에 같이 쓴다. 키 순서가 바뀌면 서명이 깨진다.
+- `payload`: JSON UTF-8 바이트의 표준 base64. 경로에 넣을 때 `encodeURIComponent`.
+- `sig`: 그 JSON 바이트에 대한 detached PGP 서명(armored)의 UTF-8을 base64url.
+- 서명 대상은 URL이 아니라 payload를 base64 decode한 원본 JSON 바이트. 텍스트 모드 서명 금지(개행 정규화됨).
+- JSON은 객체 하나. `JSON.stringify`를 한 번만 해서 그 문자열을 서명·인코딩에 같이 쓴다. 키 순서가 바뀌면 서명이 깨진다.
 
 ## JSON
 
@@ -96,8 +98,8 @@ edit-file: `{"ok":true}`
 
 ## 사용 규칙
 
-1. 호스트에서 실제로 명령이 실행된다. 추측으로 `rm`/덮어쓰기/권한 변경 하지 말 것.
-2. 파일을 고치기 전에 `read-file`로 현재 내용을 본다. `oldText`는 파일에 있는 그대로(공백·개행 포함).
-3. 한 번에 한 조각만 바꾼다. 여러 곳이면 `edit-file`을 반복한다.
+1. 호스트에서 실제로 명령이 실행되며 되돌릴수 없습니다. 추측으로 `rm`/덮어쓰기/권한 변경하지 마세요. 모두 항상 검증과 재차 확인 후 진행하세요.
+2. 파일을 고치기 전에 `read-file`로 현재 내용을 보고 실패 없이 확실히 진행하세요. `oldText`는 파일에 있는 그대로(공백·개행 포함).
+3. 한 번에 한 조각만 바꾸세요. 여러 곳이면 `edit-file`을 반복하세요.
 4. `exp`가 지난 URL은 재서명한다. 같은 URL 재사용은 만료 전에도 가능하므로 파괴적 명령 URL을 공유하지 말 것.
 5. 출력은 2MB에서 잘린다. 큰 파일은 `terminal`로 `sed`/`head` 하거나 `read-file`을 쓴다.
