@@ -16,6 +16,34 @@
 
 *</written_by_a_human>*
 
+# What is this
+
+## en
+A web AI chat without MCP that allows users to modify files and execute commands on their computer.
+This is a similar goal to the codexpro project, but the difference is that this project can be used without MCP support.
+
+The chat service you want to use can be used if any of the following are true
+- You have an internet-enabled terminal tool.
+- You have a terminal without internet access and have a web fetch tool
+
+The following chat services are either confirmed to work or are theoretically possible
+- Qwen Chat (confirmed)
+- ChatGPT Chat (theoretically possible)
+- Sakana Chat (theoretically possible)
+
+## ko
+MCP 기능이 없는 웹 AI 채팅으로도 사용자 컴퓨터의 파일을 수정하고 명령을 실행할수 있게 해줍니다.
+codexpro 프로젝트와 비슷한 목표지만 이 프로젝트는 MCP를 지원하지 않아도 사용할수 있다는 차이가 있습니다.
+
+사용하려는 채팅 서비스가 아래 경우에 하나라도 해당하는 경우 사용 가능합니다:
+- 인터넷이 가능한 터미널 도구가 있음
+- 인터넷이 불가능한 터미널이 있으며 웹 fetch 도구가 있음
+
+작동이 확인되었거나 이론상 가능한 채팅 서비스는 다음과 같습니다:
+- Qwen Chat (확인됨)
+- ChatGPT Chat (이론상 가능할것으로 예상)
+- Sakana Chat (이론상 가능할것으로 예상)
+
 # How to use
 
 ## en
